@@ -1,0 +1,17 @@
+{
+  "name": "login-intranet",
+  "version": "1.0.0",
+  "description": "sistema de login da intranet na rede prodam/spurb",
+  "main": "main.js",
+  "scripts": {
+    "dev": "parcel ./index.html",
+    "build": "parcel build ./index.html"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  },
+  "dependencies": {
+    "reset-css": "^5.0.1"
+  }
+}

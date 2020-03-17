@@ -90,7 +90,7 @@ const setAndDisplayUser = user => {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  makeRequest('GET', 'http://localhost/login-intranet/api/')
+  makeRequest('GET', 'http://spurbcp13343/login-intranet/api/')
   .then(ntlmUser => {
     makeRequest('GET', `http://spurbsp04/usuario/ws/localizacao?NM_PRODAM=${ntlmUser.nprodam}`)
         .then(users => {

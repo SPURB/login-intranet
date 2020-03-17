@@ -4,14 +4,15 @@
   "description": "sistema de login da intranet na rede prodam/spurb",
   "main": "main.js",
   "scripts": {
-    "dev": "parcel ./index.html",
-    "build": "parcel build ./index.html"
+    "dev": "parcel watch ./index.html",
+    "build": "parcel build index.html --public-url /DDE/teste-login-intranet/"
   },
   "license": "ISC",
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "reset-css": "^5.0.1"
   }
 }

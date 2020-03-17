@@ -2,6 +2,10 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-$user = array("nprodam" => "e12345");
+define('APP_PATH', realpath(dirname(__FILE__)));
+require_once './Winauth.php';
 
-echo json_encode($user);
+$user = new WindowsAuth();
+$response = array('nprodam' => $user->getUser());
+
+echo json_encode($response);

@@ -23,19 +23,19 @@ const makeRequest = (method, url) => {
   })
 }
 
-const toggleClassById = (idName, className) => document.getElementById(idName).classList.toggle(className)
+const toggleClassByQuerySelector = (selector, className) => document.querySelector(selector).classList.toggle(className)
 
 const displayError = (err, message) => {
   const element = document.getElementById('message')
   element.innerText = `${message} \n${err.statusText}`
   document.body.classList.add('error')
-  toggleClassById('user', 'hidden')
-  toggleClassById('reload', 'hidden')
+  toggleClassByQuerySelector('.container__user', 'hidden')
+  toggleClassByQuerySelector('.container__reload', 'hidden')
 
   const reloader = document.getElementById('reload')
 
   reloader.addEventListener('click', event => {
-    toggleClassById('reload', 'rotate')
+    toggleClassByQuerySelector('.conainer__reload', 'rotate')
     setTimeout(() => {
       window.location.reload()
     }, 2000)
@@ -48,12 +48,18 @@ const redirect = (location, user) => {
     return match && decodeURIComponent(match[1].replace(/\+/g, ' '))
   }
 
-  let queries = []
+  if (getParameterByName('queries')) {
+    try {
+      getParameterByName('redirect')
+    }
+    catch {
+      throw new Error('Inclua na url o parâmetro "/?redirect=http://sua-url"')
+    }
 
-  if (getParameterByName('redirect')) {
+    let queries = []
     const redirectBasePath = getParameterByName('redirect')
-    queries.push(redirectBasePath)
 
+    queries.push(redirectBasePath)
     for (const key in user) {
       const data = user[key]
       if (data) {
@@ -61,13 +67,12 @@ const redirect = (location, user) => {
       }
     }
     const outputQueries = queries
-      .map(query => {
-        query.trim()
-        return query + '/?'
-      })
+      .map(query => query.trim() + '/?')
       .join('')
-
-    window.location = outputQueries
+      window.location.assign(outputQueries)
+  }
+  else if (getParameterByName('redirect')) {
+    window.location.assign(getParameterByName('redirect'))
   }
 }
 
@@ -76,21 +81,21 @@ const setAndDisplayUser = user => {
   user.picture = `http://emurbsp12410/sp_urbanismo/rh/pessoal/${user.NR_PRONTUARIO.replace(/\s/g, '')}.jpg`
   localStorage.setItem('user-spurb', JSON.stringify(user))
 
-  toggleClassById('user', 'hidden')
+  toggleClassByQuerySelector('.container__user', 'hidden')
 
   const profile = document.getElementById('profile__image')
   profile.setAttribute('src', user.picture)
 
-  toggleClassById('profile', 'hidden')
+  toggleClassByQuerySelector('.container__profile', 'hidden')
 
   const message = document.getElementById('message')
   message.innerText = `Olá ${user.NM_NOME}`
 
-  redirect(window.location.search, user) // see https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+  redirect(window.location.search, user)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  makeRequest('GET', 'http://spurbcp13343/login-intranet/api/')
+  makeRequest('GET', './api/')
   .then(ntlmUser => {
     makeRequest('GET', `http://spurbsp04/usuario/ws/localizacao?NM_PRODAM=${ntlmUser.nprodam}`)
         .then(users => {

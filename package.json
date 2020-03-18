@@ -5,10 +5,14 @@
   "main": "main.js",
   "scripts": {
     "dev": "parcel watch ./index.html",
-    "build": "parcel build ./index.html --public-url /login-intranet/"
+    "parcel:build": "parcel build ./index.html --public-url /login/",
+    "build": "concurrently \"npm:task:beforebuild\" \"npm:parcel:build\"",
+    "task:beforebuild": "node ./tasks/beforebuild"
   },
   "license": "ISC",
   "devDependencies": {
+    "concurrently": "^5.1.0",
+    "fs-extra": "^8.1.0",
     "parcel-bundler": "^1.12.4"
   }
 }

@@ -76,7 +76,7 @@ body.error {
   align-items: center
 }
 
-#user {
+.container__user {
   margin-top: auto;
   animation: pinga 2.5s cubic-bezier(0.73, 0.07, 0.33, 0.88) infinite alternate
 }
@@ -95,16 +95,16 @@ body.error {
   line-height: 1.25;
 }
 
-#reload {
+.container__reload {
   cursor: pointer;
   margin-top: auto;
 }
 
-#reload.rotate {
+.container__reload.rotate {
   animation: antihorario 1s cubic-bezier(0.73, 0.07, 0.33, 0.88) infinite;
 }
 
-#profile {
+.container__profile {
   display: flex;
   align-items: center;
   max-width: 130px;
